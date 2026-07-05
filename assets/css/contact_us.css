@@ -1,0 +1,306 @@
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    transition: background-color 5000s ease-in-out;
+}
+textarea::-webkit-scrollbar{
+    width: 5px;
+}
+body{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
+main{
+    height: 80vh;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 100px;
+}
+.info_cards{
+    width: 500px;
+    height: 200px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.info_cards span{
+    height: 100%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgba(0, 208, 255, 0.4);
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 40%),
+    -1px -1px 5px rgba(255, 253, 253, 0.3);
+    border-radius: 10px;
+}
+
+.info_cards p {
+    color: black;
+}
+
+.info_cards span svg{
+    width: 80px;
+    height: 80px;
+}
+.info_cards span:first-child{
+    animation: phone_card 1s forwards ease-out;
+}
+
+.info_cards span:last-child{
+    animation: mail_card 1s forwards ease-out;
+}
+
+@keyframes mail_card {
+    from{
+        opacity: 0;
+        translate: 20% 0;
+    }
+}
+
+@keyframes phone_card {
+    from{
+        opacity: 0;
+        translate: -20% 0;
+    }
+}
+
+
+
+
+
+.form{
+    width: 100%;
+    min-height: 60%;
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(25px);
+    border-radius: 10px;
+    background-color: rgba(0, 208, 255, 0.4);
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 40%),
+    -1px -1px 5px rgba(255, 253, 253, 0.3);
+    animation: form-n 1s forwards ease-out;
+}
+
+@keyframes form-n {
+    from{
+        opacity: 0;
+        translate: 0 10%;
+    }
+}
+
+.form span{
+    min-height: 40%;
+    min-width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 15px;
+}
+.form span p {
+    text-align: justify;
+}
+
+form{
+    min-width: 40%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-right: 20px;
+}
+form div{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+form div input , form div textarea{
+    font-size: 16;
+    width: 100%;
+    height: 30px;
+    padding-left: 5px;
+    border: none;
+    border-bottom: 2px solid #00000098;
+    background-color: transparent;
+}
+
+hr{
+    height: 90%;
+    border-color: #000;
+    margin-right: 10px;
+}
+form div input:focus,form div textarea:focus{
+    outline: none;
+}
+
+/* validation */
+
+
+form div input:not(:placeholder-shown):user-valid{
+    border-bottom-color: green;
+}
+form div input:not(:placeholder-shown):user-invalid{
+    border-bottom-color: red;
+}
+
+
+form div label:not(.message){
+    transition: 0.1s linear;
+    z-index: -1;
+    position: absolute;
+    color: black;
+    left: 0.5%;
+    top: 5%;
+    padding-inline: 5px;
+}
+div.message{
+    height: 50%;
+}
+
+
+form div textarea{
+    padding-bottom: 0;
+    border: 2px solid #00000098;
+    border-left: none;
+    border-top: none;
+    height: 100%;
+    resize: none;
+    border-radius: 0 0 10px 0;
+}
+form div label.message{
+    transition: 0.1s linear;
+    z-index: -1;
+    color: black;
+    position: absolute;
+    left: 1%;
+    top: -.5%;
+}
+form input:not(:placeholder-shown) + label , form input:focus + label{
+    left: -0.3%;
+    top: -70%;
+}
+
+form textarea:not(:placeholder-shown) + label, form textarea:focus + label{
+    left: 0.4%;
+    top: -10%;
+}
+form button{
+    font-size: larger;
+    padding: 5px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    border: 1px solid #00000098;
+    color: black;
+    transition: 0.2s linear;
+    cursor: pointer;
+}
+form button:hover{
+    background-color: #FF921A;;
+    color: #000;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+    main{
+        min-height: 100vh;
+        margin-top: 70px;
+        justify-content: stretch;
+    }
+    .info_cards{
+        width: 100%;
+        height: 120px;
+        margin-bottom: 30px;
+    }
+    .info_cards span{
+        width: 120px;
+    }
+    .info_cards span svg{
+        width: 50px;
+        height: 50px;
+    }
+    .info_cards p {
+        font-size: small;
+    }
+    .info_cards h4{
+        font-size: smaller;
+    }
+    .form{
+        flex-direction: column;
+        min-height: 600px;
+        justify-content: space-around;
+    }
+    .form span{
+        width: 100%;
+        max-height: 200px;
+        padding-inline: 5px;
+        justify-content: space-evenly;
+    }
+    .form span h2{
+        font-size: medium;
+    }
+    .form span p{
+        font-size: smaller;
+        text-align: justify;
+        padding-inline: 5px;
+    }
+    form{
+        width: 100%;
+        height: fit-content;
+        gap: 0;
+        justify-content: stretch;
+        margin-right: 0;
+        padding-inline: 10px;
+    }
+    form button{
+        font-size: medium;
+        padding: 2px 5px;
+
+    }
+    hr{
+        display: none;
+    }
+    form div input , form div textarea{
+        margin-bottom: 20px;
+        font-size: smaller;
+    }
+    form label{
+        font-size: smaller;
+    }
+    form input:not(:placeholder-shown) + label , form input:focus + label{
+        left: -.5%;
+        top: -30%;
+    }
+    
+    form textarea:not(:placeholder-shown) + label, form textarea:focus + label{
+        left: 1%;
+        top: -11%;
+    }
+    div.message{
+        height: fit-content;
+    }
+    form div textarea{
+        height: 150px;
+    }
+}
+
+footer{
+    display: none;
+}

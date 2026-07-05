@@ -1,0 +1,822 @@
+:root{
+    --border-size: 3.5vh;
+    --primary-color: hsla(191, 100%, 50%, 0.4);
+    --medium-z-index: 99;
+}
+
+body {
+    position: relative;
+    height: 400vh;
+    scroll-snap-type: y mandatory;
+}
+/* =============================== Loader style =============================== */
+
+
+.loader_container{
+    position: fixed;
+    z-index: 999;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loader_background {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: radial-gradient(#0465b0, #00d1ff);
+}
+.loader{
+--uib-size: 8vh;
+--uib-color: #FF921A;
+--uib-speed: 1.75s;
+position: relative;
+height: var(--uib-size);
+width: var(--uib-size);
+}
+
+.loader::before,
+.loader::after {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+height: 100%;
+width: 100%;
+border-radius: 50%;
+background-color: var(--uib-color);
+animation: pulse var(--uib-speed) ease-in-out infinite;
+transform: scale(0);
+transition: background-color 0.3s ease;
+}
+
+.loader::after {
+animation-delay: calc(var(--uib-speed) / -2);
+}
+
+@keyframes pulse {
+0%,
+100% {
+    transform: scale(0);
+    opacity: 1;
+}
+50% {
+    transform: scale(1);
+    opacity: 0.25;
+}
+}
+
+/* ====================================== Painting Art Style ============================================ */
+
+/* ******************* BORDER STYLE ************************ */
+.right_border,
+.left_border,
+.top_border,
+.bottom_border {
+    position: fixed;
+    width: var(--border-size);
+    height: calc(var(--border-size)*var(--height-nb));
+    transform-style: preserve-3d;
+}
+
+.right_border,
+.left_border {
+    top: calc(50.0202% - var(--border-size)*8);
+    --height-nb: 16;
+}
+
+.top_border,
+.bottom_border {
+    right: calc(50% - var(--border-size)/2);
+    --height-nb: 10;
+}
+
+.front,
+.back,
+.left,
+.right {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-color);
+    background-repeat: repeat;
+    background-size: cover;
+    background-image: url(/images/wood_texture.webp);
+}
+
+.front,
+.back {
+    clip-path: polygon(0 calc(var(--border-size)*(var(--height-nb) - 1)), 0 var(--border-size), 100% 0, 100% 100%);
+    box-shadow: 0 0 calc(var(--border-size)/8) black inset;
+}
+
+.rt {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    transform-style: preserve-3d;
+
+}
+
+.front {
+    transform: translateZ(calc(var(--border-size) / 2));
+    
+}
+
+
+
+.right,
+.left {
+    box-shadow: 0 0 calc(var(--border-size)/(var(--height-nb)/4)) black inset;
+    height: 100%;
+    width: 50%;
+    background-color: var(--primary-color);
+    clip-path: none;
+    transform: rotateY(90deg) translateX(-50%);
+    right: -25%;
+    transform-style: preserve-3d;
+}
+
+.rt {
+    position: relative;
+    height: 100%;
+}
+
+.left {
+    height: calc(var(--border-size)*var(--height-nb) - var(--border-size)*2);
+    top: var(--border-size);
+    left: -25%;
+}
+
+.right::after,
+.right::before {
+    content: '';
+    position: absolute;
+    height: calc(var(--border-size)*1.4142135623730950488016887242097);
+    width: 100%;
+    background-color: var(--primary-color);
+    background-image: url(/images/wood_texture.webp);
+    transform-origin: bottom;
+    transform: rotateX(135deg);
+    box-shadow: 0 0 calc(var(--border-size)/8) black inset;
+}
+
+.right::after {
+    top: calc(var(--border-size)*(-1.4142135623730950488016887242097));
+}
+
+.right::before {
+    bottom: 0;
+    transform: rotateX(45deg);
+}
+
+/* ***************** Canvas style ************************* */
+.canvas {
+    transform-style: preserve-3d;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotateY(0deg);
+}
+
+/* ***************** Painting art Back Style ************************* */
+.back_art {
+    transform-style: preserve-3d;
+    position: relative;
+    background-image: linear-gradient(black, rgb(31, 29, 29), black);
+    height: calc(var(--border-size)*16 - 2px);
+    width: calc(var(--border-size)*10);
+    transform: translateZ(calc(var(--border-size)/2 + 1pt));
+    box-shadow: 1px 1px 10px rgb(184, 179, 179) inset,
+    -1px -1px 10px rgb(184, 179, 179) inset;
+    animation: back_art_a1 backwards linear;
+    animation-timeline: scroll(y);
+    animation-range: 120vh 200vh;
+}
+
+/* ***************** Painting art Front Style ************************* */
+
+.front_art{
+    transform-style: preserve-3d;
+    position: absolute;
+    height: calc(var(--border-size)*16);
+    width: calc(var(--border-size)*10);
+    object-fit: cover;
+    transform: rotateY(180deg) translateZ(+1px);
+    z-index: var(--medium-z-index);
+    animation: back_art_a1 backwards linear;
+    animation-timeline: scroll(y);
+    animation-range: 220vh 300vh;
+}
+/* **************** Back logo and hanger ************************* */
+.back_art img:last-child {
+    position: absolute;
+    right: 1%;
+    bottom: 1%;
+    width: var(--border-size);
+}
+.back_art img:first-child{
+    position: absolute;
+    width: calc(var(--border-size)/1.5);
+    right: calc(50% - var(--border-size)/1.5/2);
+    top: 1%;
+}
+
+/* ***************** Painting Art Shadow Style ************************* */
+.shadow_art {
+    position: fixed;
+    background-color: #000000;
+    filter: blur(30px);
+    width: calc(var(--border-size)*10);
+    height: calc(var(--border-size)/2);
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px) translateZ(calc(var(--border-size)/4)) rotateX(70deg) rotateZ(0deg);
+}
+
+/* ======================================================== Section Style ======================================================== */
+section{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    scroll-snap-align: center;
+}
+ section h1{
+    position: relative;
+    font-size: 2.5vw;
+    margin: 0 0;
+    color: #FF921A;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.445);
+    transform: translateY(5vw);
+    width: 44vw;
+}
+.sec3 h1{
+    transform: translateY(0);
+}
+section h1:last-child{
+    padding-left: 16.9vw;
+}
+/* ***************** Home start section ************************* */
+.home_start {
+    position: relative;
+    z-index: var(--medium-z-index);
+    height: 100vh;
+    width: 100vw;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    animation: home_an 1s backwards ease-out;
+}
+
+.home_start p{
+    width: fit-content;
+    font-size: 2vw;
+    color: #ff840091;
+    margin-top: 10px;
+    transition: 0.2s linear;
+}
+.home_start p:nth-of-type(3){
+    font-size: large;
+    color: #FF921A;
+    text-shadow: 0.5px 0.5px black;
+    animation: scroll_icon linear forwards;
+    animation-timeline: scroll(y);
+    animation-range: 0 10vh;
+}
+h1.home_title {
+    transform: rotateZ(0deg) translateY(0vh);
+    margin: 0;
+    text-shadow: 1px 1px black;
+    font-size: 5vw;
+    color: #FF921A;
+    transition: 0.2s linear;
+    width: fit-content;
+}
+
+
+.home_start > p:first-child{
+    margin-top: 10%;
+}
+/* Explore style  */
+
+a.explore{
+    position: relative;
+    display: block;
+    width: fit-content;
+    height: fit-content;
+    margin: 0 auto;
+    z-index: var(--medium-z-index);
+}
+.explore button{
+    font-size: medium;
+    font-weight: bold;
+    margin: auto;
+    background-color: transparent;
+    padding: 10px 10px;
+    border: 2px solid #FF921A;
+    border-radius: 5px;
+    color: #FF921A;
+    cursor: pointer;
+    transition: 0.2s ease-out;
+}
+.explore button:hover{
+    background-color: #FF921A;
+    color: black;
+}
+
+
+/* ========================================================== ANIMATIONS ============================================ */
+
+
+
+/* ======================================= loader animation ============================================== */
+
+.container_finish{
+  animation: container_finish 1s ease-out forwards;
+}
+.loader_finish{
+  animation: loader_finish 0.1s 0.8s ease-out forwards;
+}
+@keyframes container_finish {
+  5% {
+    border-radius: 50%;
+    width: 100vw;
+    height: 100vw;
+  }
+
+  100% {
+    border-radius: 50%;
+    width: 0;
+    height: 0;
+    z-index: -1;
+  }
+}
+@keyframes loader_finish {
+  100% {
+    width: 0;
+    height: 0;
+  }
+}
+
+/* ***************************** painting art borders animation ************************** */
+
+/* infinite animation */
+.right_border {
+    right: 20%;
+    transform: rotateZ(60deg) rotateY(20deg);
+    animation: anim1 30s linear infinite both alternate;
+}
+
+
+
+.left_border {
+    left: 20%;
+    transform: rotateZ(-50deg) rotateY(20deg);
+    animation: anim2 30s linear infinite forwards alternate;
+    rotate: 180deg;
+}
+
+.bottom_border {
+    bottom: 10%;
+    transform: rotateY(20deg);
+    animation: anim1 30s linear infinite forwards alternate;
+}
+
+.top_border {
+    top: 10%;
+    transform: rotateY(30deg) rotateZ(60deg);
+    animation: anim1 30s linear infinite forwards alternate;
+}
+@keyframes anim1 {
+    to {
+        transform: rotateZ(-90deg) rotateY(360deg);
+    }
+}
+
+@keyframes anim2 {
+    to {
+        transform: rotateZ(90deg) rotateY(360deg);
+    }
+}
+
+@keyframes anim3 {
+    to {
+        transform: rotateY(360deg) rotateZ(-60deg);
+    }
+}
+
+/* animation one */
+.right_a1,
+.left_a1,
+.top_a1,
+.bottom_a1,
+.shadow_a1 {
+    animation: right_a1 forwards linear;
+    animation-timeline: scroll(y);
+    animation-range: 0 calc(100vh + 1px);
+}
+
+.left_a1 {
+    animation-name: left_a1;
+}
+
+.top_a1 {
+    animation-name: top_a1;
+}
+
+.bottom_a1 {
+    animation-name: bottom_a1;
+}
+
+@keyframes right_a1 {
+    to {
+        right: calc(50.03% - var(--border-size)*5);
+        transform: rotateY(0deg) rotateZ(0deg);
+    }
+}
+
+@keyframes left_a1 {
+    to {
+        left: calc(50% - var(--border-size)*5);
+        transform: rotateY(0deg) rotateZ(0deg);
+    }
+}
+
+@keyframes top_a1 {
+    to {
+        top: calc(50.1011% - var(--border-size)*12.5);
+        transform: rotateY(0deg) rotateZ(-90deg);
+    }
+}
+
+@keyframes bottom_a1 {
+    to {
+        bottom: calc(50.0% - var(--border-size)*12.5);
+        transform: rotateY(0deg) rotateZ(90deg);
+    }
+}
+
+/* animation 3 */
+
+/* ***************************** Canvas animation ************************** */
+
+/* animation one */
+.canvas_a1 {
+    animation: canvas_a1 backwards linear;
+    animation-timeline: scroll(y);
+    animation-range: 0 calc(100vh + 1px);
+}
+
+@keyframes canvas_a1 {
+    0% {
+        transform: rotateY(0deg);
+    }
+
+    60% {
+        transform: rotateY(72deg);
+    }
+
+    100% {
+        transform: rotateY(180deg);
+    }
+}
+
+/* ??????????????? animation 2 (canvas + shadow) ????????????????? */
+
+.canvas_a2,
+.shadow_a2 {
+    animation: canvas_a2 linear;
+    animation-timeline: scroll(y);
+    animation-range: 120vh 200vh;
+}
+
+@keyframes shadow_a2 {
+    0% {
+        transform: translateX(-50%) translateY(100px) translateZ(calc(var(--border-size)/4)) rotateX(70deg) rotateZ(0deg);
+    }
+
+    50% {
+        filter: blur(60px);
+        width: calc(var(--border-size)*8);
+    }
+
+    100% {
+        transform: translateX(-50%) translateY(100px) translateZ(calc(var(--border-size)/4)) rotateX(70deg) rotateZ(-180deg);
+    }
+}
+
+@keyframes canvas_a2 {
+    0% {
+        transform: rotateY(180deg);
+    }
+
+    50% {
+        translate: 0 -4%;
+    }
+
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+.shadow_a2 {
+    animation-name: shadow_a2;
+}
+
+/* animatioin 3 */
+
+.left_border *, .right_border *, .top_border *, .bottom_border *{
+    animation: right_rb 3s forwards linear;
+    animation-timeline: scroll(y);
+    animation-range: 220vh 300vh;
+}
+
+@keyframes right_rb {
+    0%{
+        background-image: none;
+    }50%{
+        background-color: #4bc5dc;
+    }
+    100%{
+        background-color: #4bc5dc;
+        box-shadow: 0 0 calc(var(--border-size)/(var(--height-nb)/4)) rgb(255, 255, 255) inset;
+        background-image: none;
+        background-size: cover;
+    }
+}
+
+.canvas_a3 {
+    animation: canvas_a3 forwards linear;
+    animation-timeline: scroll(y);
+    animation-range: 220vh 300vh;
+}
+
+@keyframes canvas_a3 {
+    0% {
+        transform: rotateY(0deg);
+    }
+
+    50% {
+        translate: 0 -4%;
+    }
+
+    100% {
+        transform: rotateY(180deg);
+    }
+}
+
+/* flow animation */
+
+.canvas_flow {
+    animation: canvas_flow 1.5s cubic-bezier(0.3, 0, 0.77, 0.98) backwards infinite alternate;
+}
+
+@keyframes canvas_flow {
+    to {
+        translate: 0 -4%;
+    }
+}
+
+/* ***************************** Painting art Back animation ************************** */
+
+@keyframes back_art_a1 {
+    0% {
+        opacity: 0;
+    }50%{
+        opacity: 1;
+    }
+}
+
+/* ***************************** Painting art Shadow animation ************************** */
+
+/*  animation one */
+.shadow_a1 {
+    animation-name: shadow_a1;
+}
+
+@keyframes shadow_a1 {
+    from {
+        filter: blur(100px);
+    }
+
+    to {
+        filter: blur(30px);
+    }
+}
+
+/* animation 3 */
+
+.shadow_a3 {
+    animation: shadow_a2 linear;
+    animation-timeline: scroll(y);
+    animation-range: 220vh 300vh;
+}
+
+/* flow animation */
+
+.shadow_flow {
+    animation: shadow_flow 1.5s cubic-bezier(0.3, 0, 0.77, 0.98) infinite alternate;
+}
+
+@keyframes shadow_flow {
+    from {
+        filter: blur(30px);
+    }
+
+    to {
+        filter: blur(60px);
+        width: calc(var(--border-size)*8);
+    }
+}
+
+/* intro animation  */
+
+@keyframes home_an {
+    from{
+        translate: 0 -10%;
+        opacity: 0;
+    }
+}
+/* ********************************* Sections animation  ************************************************** */
+
+/* home start animation */
+.home_start{
+    animation: home_start forwards;
+    animation-timeline: scroll(y);
+    animation-range: 0 90vh;
+}
+@keyframes home_start {
+    50%{
+        opacity: 0;
+    }
+    100%{
+        scale: 0;
+    }
+}
+
+
+.scroll_icon .scroller{
+    fill: #FF921A;
+    animation: scroll-down 2s ease-out infinite;
+    y: 54.564457;
+    opacity: 1;
+    height: 5px;
+}
+.scroll_icon{
+    margin-top: 10%;
+    width: 50px;
+    animation: scroll_icon linear forwards;
+    animation-timeline: scroll(y);
+    animation-range: 0 10vh;
+}
+@keyframes scroll-down {
+    50%{
+        height: 26.968645px;
+        opacity: 1;
+    }100%{
+        y: 124.564457;
+        height: 0px;
+        opacity: 0;
+    }
+}
+@keyframes scroll_icon{
+    to{
+        opacity: 0;
+    }
+}
+
+
+/* description animation */
+section .part_1,section .part_2{
+    animation: part_1 both;
+    animation-timeline: scroll(y);
+    animation-range: var(--start) var(--end);
+    position: absolute;
+}
+section .part_2{
+    animation-name: part_2;
+}
+.sec3 .part_1,.sec3 .part_2{
+    animation-name: sec3_part;
+}
+.sec3 .part_1{
+    --translate-start: -20%;
+}
+.sec3 .part_2{
+    --translate-start: 20%;
+}
+@keyframes sec3_part {
+    0%{
+        translate: var(--translate-start) 0;
+        opacity: 0;
+    }100%{
+        translate: 0;
+        opacity: 1;
+}
+}
+@keyframes part_1 {
+    0%{
+        translate: -20% 0;
+        opacity: 0;
+    }40%{
+        translate: 0;
+        opacity: 1;
+    }60%{
+        translate: 0;
+        opacity: 1;
+    }
+    100%{
+        translate: 20% 0;
+        opacity: 0;
+    }
+}
+
+@keyframes part_2 {
+    0%{
+        translate: 20% 0;
+        opacity: 0;
+    }40%{
+        translate: 0;
+        opacity: 1;
+    }60%{
+        translate: 0;
+        opacity: 1;
+    }
+    100%{
+        translate: -20% 0;
+        opacity: 0;
+    }
+}
+
+
+@media only screen and (max-width: 900px) {
+    :root{
+        --border-size: 2.5vh;
+    }
+    .bottom_border {
+        bottom: 2%;
+    }
+    .top_border {
+        top: 5%;
+    }
+    .home_start p{
+        font-size: 5vw;
+    }
+    .home_start h1{
+        font-size: 10vw;
+    }
+    .right_border {
+        transform: rotateZ(30deg) rotateY(20deg);
+    }
+    
+    .left_border {
+        transform: rotateZ(-30deg) rotateY(20deg);
+    }
+    @keyframes anim1 {
+        to {
+            transform: rotateZ(-30deg) rotateY(360deg);
+        }
+    }
+    
+    @keyframes anim2 {
+        to {
+            transform: rotateZ(30deg) rotateY(360deg);
+        }
+    }
+    a.explore{
+        bottom: 120px;
+    }
+    section{
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+    section h1{
+        font-size: 2.5vh;
+        width: 27.1vh;
+    }
+    section h1:last-child{
+        padding-left: 0;
+    }
+    section:not(:last-child,:first-child) h1:first-child{
+        translate: 0 -10%;
+    }
+    section:not(:last-child,:first-child) h1:last-child{
+        translate: 0 220%;
+    }
+    .sec3 h1:first-child{
+        translate: 0 -50%;
+    }
+}
